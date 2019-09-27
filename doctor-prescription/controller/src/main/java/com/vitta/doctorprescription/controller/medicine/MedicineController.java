@@ -1,4 +1,4 @@
-package com.vitta.doctorprescription.controller;
+package com.vitta.doctorprescription.controller.medicine;
 
 import com.vitta.doctorprescription.medicine.repository.MedicineRepository;
 import org.springframework.beans.factory.annotation.Autowired;

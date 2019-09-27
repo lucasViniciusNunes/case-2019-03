@@ -6,6 +6,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages = "com.vitta.doctorprescription.controller")
+@ComponentScan(basePackages = {
+    "com.vitta.doctorprescription.controller",
+    "com.vitta.doctorprescription.prescription.bo"
+})
 public class WebConfig {
 }

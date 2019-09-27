@@ -9,6 +9,7 @@
 		<module>config</module>
         <module>medicine</module>
         <module>controller</module>
+        <module>prescription</module>
     </modules>
 
     <parent>

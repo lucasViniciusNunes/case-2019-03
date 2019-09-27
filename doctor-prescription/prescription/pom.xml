@@ -4,20 +4,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <dependencies>
-        <dependency>
-            <groupId>com.vitta</groupId>
-            <artifactId>medicine</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.vitta</groupId>
-            <artifactId>prescription</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
 
     <parent>
         <artifactId>doctor-prescription</artifactId>
@@ -25,7 +11,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>controller</artifactId>
+    <artifactId>prescription</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
 </project>
