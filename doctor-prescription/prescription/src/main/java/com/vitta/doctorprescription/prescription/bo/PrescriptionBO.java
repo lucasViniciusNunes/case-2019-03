@@ -1,12 +1,11 @@
 package com.vitta.doctorprescription.prescription.bo;
 
 import com.vitta.doctorprescription.prescription.domain.PrescriptionEntity;
-import com.vitta.doctorprescription.prescription.dto.RegisterPrescriptionRequest;
-import com.vitta.doctorprescription.prescription.dto.RegisterPrescriptionResponse;
-import com.vitta.doctorprescription.prescription.dto.SearchPrescriptionResponse;
+import com.vitta.doctorprescription.prescription.dto.*;
 import com.vitta.doctorprescription.prescription.repository.PrescriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -14,8 +13,19 @@ import java.util.Optional;
 @Service
 public class PrescriptionBO {
 
+    // region repositories
+
     @Autowired
     private PrescriptionRepository repository;
+
+    // endregion
+
+    // region BO's
+
+    @Autowired
+    private PrescriptionItemBO prescriptionItemBO;
+
+    // endregion
 
     @Transactional(rollbackFor = Throwable.class)
     public RegisterPrescriptionResponse createPrescription(RegisterPrescriptionRequest request) {
@@ -46,6 +56,18 @@ public class PrescriptionBO {
             .doctorId(prescription.getDoctorId())
             .patientId(prescription.getPatientId())
             .build();
+
+    }
+
+    @Transactional(rollbackFor = Throwable.class, isolation = Isolation.READ_COMMITTED, readOnly = true)
+    public RegisterItemResponse registerItem(Long prescriptionId, RegisterItemRequest item) {
+
+        Optional<PrescriptionEntity> prescription = repository.findById(prescriptionId);
+        if (!prescription.isPresent()) {
+            return null;
+        }
+
+        return prescriptionItemBO.registerItem(prescription.get(), item);
 
     }
 
