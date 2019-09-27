@@ -1,4 +1,4 @@
-package com.vitta.doctorprescription;
+package com.vitta.doctorprescription.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

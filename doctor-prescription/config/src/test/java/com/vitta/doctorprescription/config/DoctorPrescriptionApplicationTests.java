@@ -1,4 +1,4 @@
-package com.vitta.doctorprescription;
+package com.vitta.doctorprescription.config;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
