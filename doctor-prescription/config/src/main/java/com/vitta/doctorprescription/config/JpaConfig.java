@@ -5,7 +5,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
-@EntityScan("com.vitta.doctorprescription.medicine.domain")
-@EnableJpaRepositories("com.vitta.doctorprescription.medicine.repository")
+@EntityScan(basePackages = {
+    "com.vitta.doctorprescription.medicine.domain",
+    "com.vitta.doctorprescription.pharmacon.domain"
+})
+@EnableJpaRepositories(basePackages = {
+    "com.vitta.doctorprescription.medicine.repository",
+    "com.vitta.doctorprescription.pharmacon.repository"
+})
 public class JpaConfig {
 }
