@@ -1,16 +1,19 @@
 package com.vitta.doctorprescription.prescription.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.vitta.doctorprescription.medicine.domain.MedicineInteractionEntity;
+import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
+@Builder
 @AllArgsConstructor
 public class RegisterItemResponse {
 
     private Long itemId;
+
+    private List<MedicineInteractionEntity> medicineInteractions;
 
 }

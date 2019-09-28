@@ -1,6 +1,7 @@
 package com.vitta.doctorprescription.medicine.repository;
 
 import com.vitta.doctorprescription.medicine.domain.MedicineEntity;
+import com.vitta.doctorprescription.medicine.domain.MedicineInteractionEntity;
 import com.vitta.doctorprescription.medicine.domain.MedicinePharmaconEntity;
 import com.vitta.doctorprescription.pharmacon.domain.PharmaconEntity;
 import com.vitta.doctorprescription.pharmacon.repository.PharmaconRepository;
@@ -23,6 +24,9 @@ public class MedicineDataLoader {
 
     @Autowired
     private MedicinePharmaconRepository medicinePharmaconRepository;
+
+    @Autowired
+    private MedicineInteractionRepository medicineInteractionRepository;
 
     // endregion
 
@@ -59,6 +63,23 @@ public class MedicineDataLoader {
         medicinePharmaconRepository.save(new MedicinePharmaconEntity(succinato, hidrocortisona));
         medicinePharmaconRepository.save(new MedicinePharmaconEntity(terra, hidrocortisona));
         medicinePharmaconRepository.save(new MedicinePharmaconEntity(terra, oxitetraciclina));
+
+        // Insert pharmacon interaction
+        MedicineInteractionEntity interactionNortAcet = MedicineInteractionEntity.builder()
+            .pharmacon1(nortriptilina)
+            .pharmacon2(acetazolamida)
+            .name("Grave")
+            .description("O uso concomitante de NORTRIPTILINA e ACETAZOLAMIDA pode resultar em aumento do risco de síndrome serotoninérgica")
+            .build();
+        medicineInteractionRepository.save(interactionNortAcet);
+
+        MedicineInteractionEntity interactionHidroOxit = MedicineInteractionEntity.builder()
+            .pharmacon1(hidrocortisona)
+            .pharmacon2(oxitetraciclina)
+            .name("Leve")
+            .description("O uso concomitante de HIDROCORTISONA e OXITETRACICLINA pode resultar em aumento do risco de síndrome serotoninérgica")
+            .build();
+        medicineInteractionRepository.save(interactionHidroOxit);
 
     }
 
