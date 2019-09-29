@@ -34,7 +34,7 @@ public class MedicineInteractionBO {
 
         List<PharmaconEntity> pharmacons = medicinePharmaconBO.findBy(prescriptionId, medicineId);
         if (CollectionUtils.isEmpty(pharmacons)) {
-            return DefaultResponse.withErrorMessage("Pharmacons of medicine not found.", ResponseStatus.INTERNAL_SERVER_ERROR);
+            return DefaultResponse.withErrorMessage("Pharmacons of medicine not found.", ResponseStatus.BUSINESS_EXCEPTION);
         }
 
         List<MedicineInteractionEntity> medicineInteraction = repository.findByPharmacon1InAndPharmacon2In(pharmacons, pharmacons);
