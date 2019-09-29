@@ -9,7 +9,7 @@ services:
     volumes:
       - ./sqldata:/var/lib/sqldata
     environment:
-      - SA_PASSWORD=Lojist@2017
+      - SA_PASSWORD=ZYc32,?#N~kWCrqAWS
       - ACCEPT_EULA=Y
       - MSSQL_PID=Express
     restart: unless-stopped
