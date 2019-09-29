@@ -10,6 +10,7 @@
         <module>medicine</module>
         <module>controller</module>
         <module>prescription</module>
+        <module>core</module>
     </modules>
 
     <parent>

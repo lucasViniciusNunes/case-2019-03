@@ -1,5 +1,7 @@
 package com.vitta.doctorprescription.prescription.bo;
 
+import com.vitta.doctorprescription.core.service.dto.DefaultResponse;
+import com.vitta.doctorprescription.core.service.enums.ResponseStatus;
 import com.vitta.doctorprescription.prescription.domain.PrescriptionEntity;
 import com.vitta.doctorprescription.prescription.dto.*;
 import com.vitta.doctorprescription.prescription.repository.PrescriptionRepository;
@@ -60,14 +62,12 @@ public class PrescriptionBO {
     }
 
     @Transactional(rollbackFor = Throwable.class, isolation = Isolation.READ_COMMITTED, readOnly = true)
-    public RegisterItemResponse registerItem(Long prescriptionId, RegisterItemRequest item) {
+    public DefaultResponse registerItem(Long prescriptionId, RegisterItemRequest item) {
 
         Optional<PrescriptionEntity> prescription = repository.findById(prescriptionId);
-        if (!prescription.isPresent()) {
-            return null;
-        }
-
-        return prescriptionItemBO.registerItem(prescription.get(), item);
+        return prescription.map(p ->
+            prescriptionItemBO.registerItem(p, item))
+            .orElse(DefaultResponse.withErrorMessage("Prescription not found.", ResponseStatus.NOT_FOUND));
 
     }
 

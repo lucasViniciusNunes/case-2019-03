@@ -1,8 +1,10 @@
 package com.vitta.doctorprescription.controller.prescription;
 
+import com.vitta.doctorprescription.core.service.dto.DefaultResponse;
 import com.vitta.doctorprescription.prescription.bo.PrescriptionBO;
 import com.vitta.doctorprescription.prescription.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -39,10 +41,11 @@ public class PrescriptionController {
     // region prescriptionItem
 
     @PostMapping(value = "/{id}/item", consumes = "application/json", produces = "application/json")
-    public RegisterItemResponse addPrescriptionItem(@PathVariable("id") Long prescriptionId,
-                                                    @Valid @RequestBody RegisterItemRequest request) {
+    public ResponseEntity addPrescriptionItem(@PathVariable("id") Long prescriptionId,
+                                              @Valid @RequestBody RegisterItemRequest request) {
 
-        return prescriptionBO.registerItem(prescriptionId, request);
+        DefaultResponse response = prescriptionBO.registerItem(prescriptionId, request);
+        return response.buildResponse();
 
     }
 

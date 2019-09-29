@@ -1,9 +1,10 @@
 package com.vitta.doctorprescription.prescription.bo;
 
+import com.vitta.doctorprescription.core.service.dto.DefaultResponse;
+import com.vitta.doctorprescription.core.service.enums.ResponseStatus;
 import com.vitta.doctorprescription.medicine.bo.MedicineBO;
 import com.vitta.doctorprescription.medicine.bo.MedicineInteractionBO;
 import com.vitta.doctorprescription.medicine.domain.MedicineEntity;
-import com.vitta.doctorprescription.medicine.domain.MedicineInteractionEntity;
 import com.vitta.doctorprescription.prescription.domain.PrescriptionEntity;
 import com.vitta.doctorprescription.prescription.domain.PrescriptionItemEntity;
 import com.vitta.doctorprescription.prescription.dto.RegisterItemRequest;
@@ -13,9 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-
-import java.util.List;
 
 @Service
 public class PrescriptionItemBO {
@@ -38,19 +36,17 @@ public class PrescriptionItemBO {
     // endregion
 
     @Transactional(rollbackFor = Throwable.class, isolation = Isolation.READ_COMMITTED, readOnly = true)
-    public RegisterItemResponse registerItem(PrescriptionEntity prescription, RegisterItemRequest item) {
+    public DefaultResponse registerItem(PrescriptionEntity prescription, RegisterItemRequest item) {
 
-        MedicineEntity medicine = medicineBO.findById(item.getMedicineId());
-        if (medicine == null) {
-            return null;
+        DefaultResponse medicineResponse = medicineBO.findById(item.getMedicineId());
+        if (medicineResponse.hasError()) {
+            return medicineResponse;
         }
+        MedicineEntity medicine = (MedicineEntity) medicineResponse.getResponse();
 
-        List<MedicineInteractionEntity> medicineInteraction = medicineInteractionBO.identifyDrugInteraction(
-            prescription.getId(), medicine.getId());
-        if (!CollectionUtils.isEmpty(medicineInteraction)) {
-            return RegisterItemResponse.builder()
-                .medicineInteractions(medicineInteraction)
-                .build();
+        DefaultResponse medicineInteraction = medicineInteractionBO.identifyDrugInteraction(prescription.getId(), medicine.getId());
+        if (medicineInteraction.hasError()) {
+            return medicineInteraction;
         }
 
         PrescriptionItemEntity prescriptionItem = PrescriptionItemEntity.builder()
@@ -62,9 +58,8 @@ public class PrescriptionItemBO {
 
         prescriptionItem = prescriptionItemRepository.save(prescriptionItem);
 
-        return RegisterItemResponse.builder()
-            .itemId(prescriptionItem.getId())
-            .build();
+        RegisterItemResponse response = new RegisterItemResponse(prescriptionItem.getId());
+        return new DefaultResponse(response, ResponseStatus.SUCCESS);
 
     }
 
