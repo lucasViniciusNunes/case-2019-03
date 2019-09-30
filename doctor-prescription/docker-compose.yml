@@ -1,7 +1,10 @@
 version: '2'
 services:
   db:
-    container_name: sqlserver
+    container_name: sqlserver1
+    build:
+      dockerfile: db.dockerfile
+      context: .
     image: microsoft/mssql-server-linux:latest
     ports:
       - 1433:1433
@@ -12,4 +15,19 @@ services:
       - SA_PASSWORD=ZYc32,?#N~kWCrqAWS
       - ACCEPT_EULA=Y
       - MSSQL_PID=Express
+    networks:
+      - prescription
     restart: unless-stopped
+  api:
+    container_name: prescription_api
+    build: .
+    image: openjdk:8-jdk-alpine
+    ports:
+      - 8080:8080
+    networks:
+      - prescription
+    depends_on:
+      - db
+networks:
+  prescription:
+    driver: bridge
