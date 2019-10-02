@@ -4,7 +4,7 @@
 
 No diretório doctor-prescription compile o projeto com o comando:
 
-mvn clean install
+``` mvn clean install ```
 
 Acesse o diretório doctor-prescription/db do projeto, onde encontra-se os arquivos do docker, e execute o comando a seguir:
 
