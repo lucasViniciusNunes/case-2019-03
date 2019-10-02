@@ -17,3 +17,9 @@ Assim que o container do banco de dados estiver em execução, crie o banco de d
 Em seguida, acesse o diretório doctor-prescription e execute o comando para subir o container da aplicação:
 
 ``` docker-compose up --build ```
+
+### Test
+
+O diretório docs possui uma collection do postman com as chamadas dos serviços disponíveis na API.
+
+Adicionei apenas alguns medicamento para os teste: 40812, 21058 - 28438, 10508 - 26028, 25171
