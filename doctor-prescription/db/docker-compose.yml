@@ -1,0 +1,22 @@
+version: '2'
+services:
+  db:
+    container_name: sqlserver1
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - 1433:1433
+    shm_size: 1g
+    volumes:
+      - ./sqldata:/var/lib/sqldata
+    environment:
+      - SA_PASSWORD=ZYc32,?#N~kWCrqAWS
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Express
+    networks:
+      - prescription
+    restart: unless-stopped
+networks:
+  prescription:
+    driver: bridge
